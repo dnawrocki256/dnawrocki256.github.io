@@ -1,0 +1,248 @@
+---
+layout: default
+title: Home
+---
+
+<div class="intro">
+  <h2>2014 Elo</h2>
+  <div class="text-block">
+</div>
+
+<div class="league-container">
+  <div class="league-card">
+    <h3 class="ucl">UEFA Champions League</h3>
+    <p class="club-name">
+      <span class="precln">Champion</span>
+      <img src="flags/ESP.svg" class="flag">
+      Real Madrid CF
+      <span class="country-abbr">ESP</span>
+    </p>
+    <p class="club-name">
+      <span class="precln">Runners-up</span>
+      <img src="flags/ESP.svg" class="flag">
+      Atlético de Madrid
+      <span class="country-abbr">ESP</span>
+    </p>
+  </div>
+
+  <div class="league-card">
+    <h3 class="uel">UEFA Europa League</h3>
+    <p class="club-name">
+      <span class="precln">Champion</span>
+      <img src="flags/ESP.svg" class="flag">
+      Sevilla FC
+      <span class="country-abbr">ESP</span>
+    </p>
+    <p class="club-name">
+      <span class="precln">Runners-up</span>
+      <img src="flags/POR.svg" class="flag">
+      SL Benfica
+      <span class="country-abbr">POR</span>
+    </p>
+  </div>
+</div>
+
+<div class="info-container">
+  <div class="info-card">
+    <h3 class="info-title">Most points gained</h3>
+    <p class="club-name">
+      <img src="flags/BUL.svg" class="flag">
+      PFC Ludogorets Razgrad
+      <span class="country-abbr">BUL</span>
+    </p>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">119.83</span>
+  </div>
+
+  <div class="info-card">
+    <h3 class="info-title">Biggest ranking climb</h3>
+    <p class="club-name">
+      <img src="flags/BUL.svg" class="flag">
+      PFC Ludogorets Razgrad
+      <span class="country-abbr">BUL</span>
+    </p>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">189</span>
+  </div>
+
+  <div class="info-card">
+    <h3 class="info-title">Most points lost</h3>
+    <p class="club-name">
+      <img src="flags/FRA.svg" class="flag">
+      FC Girondins de Bordeaux
+      <span class="country-abbr">FRA</span>
+    </p>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">90.38</span>
+  </div>
+
+  <div class="info-card">
+    <h3 class="info-title">Biggest ranking drop</h3>
+    <p class="club-name">
+      <img src="flags/NOR.svg" class="flag">
+      Tromsø IL
+      <span class="country-abbr">NOR</span>
+    </p>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">82</span>
+  </div>
+</div>
+
+<div class="filter-container">
+  <label for="countryFilter">Filter by country:</label>
+  <select id="countryFilter">
+    <option value="all">All countries</option>
+    <option value="ALB">Albania</option>
+    <option value="AND">Andorra</option>
+    <option value="ARM">Armenia</option>
+    <option value="AUT">Austria</option>
+    <option value="AZE">Azerbaijan</option>
+    <option value="BLR">Belarus</option>
+    <option value="BEL">Belgium</option>
+    <option value="BIH">Bosnia and Herzegovina</option>
+    <option value="BUL">Bulgaria</option>
+    <option value="CRO">Croatia</option>
+    <option value="CYP">Cyprus</option>
+    <option value="CZE">Czech Republic</option>
+    <option value="DEN">Denmark</option>
+    <option value="ENG">England</option>
+    <option value="EST">Estonia</option>
+    <option value="FRO">Faroe Islands</option>
+    <option value="FIN">Finland</option>
+    <option value="FRA">France</option>
+    <option value="GEO">Georgia</option>
+    <option value="GER">Germany</option>
+    <option value="GIB">Gibraltar</option>
+    <option value="GRE">Greece</option>
+    <option value="HUN">Hungary</option>
+    <option value="ISL">Iceland</option>
+    <option value="IRL">Ireland, Republic of</option>
+    <option value="ISR">Israel</option>
+    <option value="ITA">Italy</option>
+    <option value="KAZ">Kazakhstan</option>
+    <option value="KOS">Kosovo</option>
+    <option value="LVA">Latvia</option>
+    <option value="LIE">Liechtenstein</option>
+    <option value="LTU">Lithuania</option>
+    <option value="LUX">Luxembourg</option>
+    <option value="MLT">Malta</option>
+    <option value="MDA">Moldova</option>
+    <option value="MNE">Montenegro</option>
+    <option value="NED">Netherlands</option>
+    <option value="MKD">North Macedonia</option>
+    <option value="NIR">Northern Ireland</option>
+    <option value="NOR">Norway</option>
+    <option value="POL">Poland</option>
+    <option value="POR">Portugal</option>
+    <option value="ROU">Romania</option>
+    <option value="RUS">Russia</option>
+    <option value="SMR">San Marino</option>
+    <option value="SCO">Scotland</option>
+    <option value="SRB">Serbia</option>
+    <option value="SVK">Slovakia</option>
+    <option value="SVN">Slovenia</option>
+    <option value="ESP">Spain</option>
+    <option value="SWE">Sweden</option>
+    <option value="SUI">Switzerland</option>
+    <option value="TUR">Turkey</option>
+    <option value="UKR">Ukraine</option>
+    <option value="WAL">Wales</option>
+  </select>
+</div>
+
+
+<script>
+let fullData = [];
+let CURRENT_YEAR = 2014;
+
+fetch('rankings/2014ranking.json')
+  .then(res => res.json())
+  .then(data => {
+    fullData = data;
+    renderTable(fullData);
+  });
+
+function renderTable(data) {
+  const tbody = document.querySelector('#elo-table tbody');
+  tbody.innerHTML = '';
+
+  data.forEach(club => {
+      const row = document.createElement('tr');
+
+      const lastYearDiff = CURRENT_YEAR - club['last_year'];
+      let lastYearColor = '';
+      if (lastYearDiff === 0) lastYearColor = 'black';
+      else if (lastYearDiff === 1) lastYearColor = '#ffce00';
+      else if (lastYearDiff === 2) lastYearColor = '#ef8f00';
+      else lastYearColor = '#ce1126';
+
+      let rankChangeHTML = '';
+      switch(club['rank_change_d']) {
+        case 'NEW':
+          rankChangeHTML = '<span class="rank-change-new">NEW</span>';
+          break;
+        case '-':
+          rankChangeHTML = '<img src="icons/no-change.svg" class="icon">';
+          break;
+        default:
+          const num = Math.abs(parseInt(club['rank_change_d']));
+          rankChangeHTML = club['rank_change_d'].startsWith('+')
+            ? `<img src="icons/increase.svg" class="icon"> ${num}`
+            : `<img src="icons/decrease.svg" class="icon"> ${num}`;
+      }
+
+      let eloChangeHTML = '';
+      switch(club['change_d']) {
+        case 'NEW':
+          eloChangeHTML = '<span class="rank-change-new">NEW</span>';
+          break;
+        case '0':
+          eloChangeHTML = '<img src="icons/no-change.svg" class="icon">';
+          break;
+        case '0.00':
+          eloChangeHTML = '<img src="icons/no-change.svg" class="icon">';
+          break;
+        default:
+          const num = Number(Math.abs(parseFloat(club['change_d'])).toFixed(2));
+          eloChangeHTML = club['change_d'].startsWith('-')
+            ? `<img src="icons/decrease.svg" class="icon"> ${num}`
+            : `<img src="icons/increase.svg" class="icon"> ${num}`;
+      }
+
+      row.innerHTML = `
+        <td class="rank-col">${club['2014_rank']}</td>
+        <td class="rank-change-col">${rankChangeHTML}</td>
+        <td class="club-col">
+        <img src="flags/${club.country}.svg" class="flag">
+        <span class="club-name">${club['club_full']}</span>
+        <span class="club-country">${club.country}</span>
+        </td>
+        <td class="elo-col">${club['2014_elo'].toFixed(2)}</td>
+        <td class="elo-change-col">${eloChangeHTML}</td>
+        <td class="year-col" style="color:${lastYearColor}">${club['last_year']}</td>
+      `;
+      tbody.appendChild(row);
+    });
+}
+
+document.getElementById('countryFilter').addEventListener('change', e => {
+  const country = e.target.value;
+  if (country === 'all') {
+    renderTable(fullData);
+  } else {
+    const filtered = fullData.filter(club => club.country === country);
+    renderTable(filtered);
+  }
+});
+</script>
+
+<div class="table-wrapper">
+  <div class="elo-header">
+    <span class="rank-col">Rank</span>
+    <span class="rank-change-col">+/- R.</span>
+    <span class="club-col">Team</span>
+    <span class="elo-col">Elo</span>
+    <span class="elo-change-col">+/- Elo</span>
+    <span class="year-col">Last year in UEFA competition</span>
+  </div>
+
+  <table id="elo-table">
+    <tbody></tbody>
+  </table>
+</div>

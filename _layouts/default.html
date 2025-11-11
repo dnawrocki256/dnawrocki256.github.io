@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Data Projects</title>
+  <link rel="stylesheet" href="{{ 'css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+  {% include banner.html %}   <!-- shared header/nav -->
+
+  {{ content }}               <!-- page-specific content goes here -->
+
+</body>
+
+<div class="line"></div>
+<div class="text-block">
+  <p>&copy; 2025 Dawid Nawrocki</p>
+</div>
+
+</html>
