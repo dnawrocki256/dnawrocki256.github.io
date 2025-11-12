@@ -29,7 +29,7 @@
 </nav>   <!-- shared header/nav -->
 
   <div class="intro">
-  <h2>2014 Elo</h2>
+  <h2>2019 Elo</h2>
   <div class="text-block">
 </div>
 
@@ -38,15 +38,15 @@
     <h3 class="ucl">UEFA Champions League</h3>
     <p class="club-name">
       <span class="precln">Champion</span>
-      <img src="flags/ESP.svg" class="flag">
-      Real Madrid CF
-      <span class="country-abbr">ESP</span>
+      <img src="flags/ENG.svg" class="flag">
+      Liverpool FC
+      <span class="country-abbr">ENG</span>
     </p>
     <p class="club-name">
       <span class="precln">Runners-up</span>
-      <img src="flags/ESP.svg" class="flag">
-      Atlético de Madrid
-      <span class="country-abbr">ESP</span>
+      <img src="flags/ENG.svg" class="flag">
+      Tottenham Hotspur FC
+      <span class="country-abbr">ENG</span>
     </p>
   </div>
 
@@ -54,15 +54,15 @@
     <h3 class="uel">UEFA Europa League</h3>
     <p class="club-name">
       <span class="precln">Champion</span>
-      <img src="flags/ESP.svg" class="flag">
-      Sevilla FC
-      <span class="country-abbr">ESP</span>
+      <img src="flags/ENG.svg" class="flag">
+      Chelsea FC
+      <span class="country-abbr">ENG</span>
     </p>
     <p class="club-name">
       <span class="precln">Runners-up</span>
-      <img src="flags/POR.svg" class="flag">
-      SL Benfica
-      <span class="country-abbr">POR</span>
+      <img src="flags/ENG.svg" class="flag">
+      Arsenal FC
+      <span class="country-abbr">ENG</span>
     </p>
   </div>
 </div>
@@ -71,41 +71,41 @@
   <div class="info-card">
     <h3 class="info-title">Most points gained</h3>
     <p class="club-name">
-      <img src="flags/BUL.svg" class="flag">
-      PFC Ludogorets Razgrad
-      <span class="country-abbr">BUL</span>
+      <img src="flags/NED.svg" class="flag">
+      AFC Ajax
+      <span class="country-abbr">NED</span>
     </p>
-    <span class="info-change"><img src="icons/increase.svg" class="icon">119.83</span>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">116.87</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Biggest ranking climb</h3>
     <p class="club-name">
-      <img src="flags/BUL.svg" class="flag">
-      PFC Ludogorets Razgrad
-      <span class="country-abbr">BUL</span>
+      <img src="flags/CRO.svg" class="flag">
+      GNK Dinamo Zagreb
+      <span class="country-abbr">CRO</span>
     </p>
-    <span class="info-change"><img src="icons/increase.svg" class="icon">189</span>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">133</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Most points lost</h3>
     <p class="club-name">
-      <img src="flags/FRA.svg" class="flag">
-      FC Girondins de Bordeaux
-      <span class="country-abbr">FRA</span>
+      <img src="flags/ESP.svg" class="flag">
+      Real Madrid CF
+      <span class="country-abbr">ESP</span>
     </p>
-    <span class="info-change"><img src="icons/decrease.svg" class="icon">90.38</span>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">88.76</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Biggest ranking drop</h3>
     <p class="club-name">
-      <img src="flags/NOR.svg" class="flag">
-      Tromsø IL
-      <span class="country-abbr">NOR</span>
+      <img src="flags/FRA.svg" class="flag">
+      Olympique de Marseille
+      <span class="country-abbr">FRA</span>
     </p>
-    <span class="info-change"><img src="icons/decrease.svg" class="icon">82</span>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">47</span>
   </div>
 </div>
 
@@ -174,9 +174,9 @@
 
 <script>
 let fullData = [];
-let CURRENT_YEAR = 2014;
+let CURRENT_YEAR = 2019;
 
-fetch('rankings/2014ranking.json')
+fetch('rankings/2019ranking.json')
   .then(res => res.json())
   .then(data => {
     fullData = data;
@@ -231,14 +231,14 @@ function renderTable(data) {
       }
 
       row.innerHTML = `
-        <td class="rank-col">${club['2014_rank']}</td>
+        <td class="rank-col">${club['2019_rank']}</td>
         <td class="rank-change-col">${rankChangeHTML}</td>
         <td class="club-col">
         <img src="flags/${club.country}.svg" class="flag">
         <span class="club-name">${club['club_full']}</span>
         <span class="club-country">${club.country}</span>
         </td>
-        <td class="elo-col">${club['2014_elo'].toFixed(2)}</td>
+        <td class="elo-col">${club['2019_elo'].toFixed(2)}</td>
         <td class="elo-change-col">${eloChangeHTML}</td>
         <td class="year-col" style="color:${lastYearColor}">${club['last_year']}</td>
       `;
