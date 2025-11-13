@@ -15,7 +15,7 @@ header {
   background-color: #e79e8f;
   color: #000000;
   padding: 0.6rem;
-  font-size: 36px;
+  font-size: 2.4rem;
 }
 
 header h1 {
@@ -24,12 +24,12 @@ header h1 {
 
 h1 {
   text-align: center;
-  font-size: 36px;
+  font-size: 1.8rem;
 }
 
 h2 {
   text-align: center;
-  font-size: 26px;
+  font-size: 1.2rem;
 }
 
 
@@ -87,7 +87,7 @@ nav a i {
 .project-card {
   border: 1px solid #cccccc;
   padding: 1rem;
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
   justify-content: center;
   margin-bottom: 2%;
@@ -107,14 +107,14 @@ nav a i {
 .project-card-title {
   color: #000000;
   text-align: center;
-  font-size: 18px;
+  font-size: 1.2rem;
 }
 
 .text-block {
   justify-content: center;
   text-align: center;
-  font-size: 18px;
-  margin-inline: 25%;
+  font-size: 1rem;
+  margin-inline: 12.5%;
 }
 
 .inline-image {
@@ -125,7 +125,7 @@ nav a i {
 }
 
 .inline-image img {
-  max-width: 50%;
+  max-width: 75%;
   height: auto;
   border: 1px solid #000000;
 }
@@ -133,10 +133,10 @@ nav a i {
 .image-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  margin-left: 30%;
-  margin-right: 30%;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin-left: 12.5%;
+  margin-right: 12.5%;
   justify-items: center;
 }
 
@@ -152,7 +152,7 @@ nav a i {
 }
 
 figcaption {
-  font-size: 15px;
+  font-size: 0.9rem;
   font-style: italic;
   margin: 5%;
   padding-top: 2%;
@@ -160,7 +160,7 @@ figcaption {
 }
 
 .date {
-  font-size: 15px;
+  font-size: 1rem;
   font-style: italic;
   text-align: center;
   padding-bottom: 1%;
@@ -170,7 +170,7 @@ table {
   margin-left: auto;
   margin-right: auto;
   margin-top: 1%;
-  width: 50%;
+  width: 80%;
 }
 
 table, th, td {
@@ -178,7 +178,7 @@ table, th, td {
   border-collapse: collapse;
   text-align: center;
   padding: 1%;
-  font-size: 15px;
+  font-size: 0.75rem;
   table-layout: fixed;
 }
 
@@ -203,6 +203,12 @@ table, th, td {
   table-layout: fixed;
 }
 
+@media (max-width: 920px) {
+  #elo-table {
+    width: 90%;
+  }
+}
+
 #elo-table thead {
   display: none;
 }
@@ -218,14 +224,14 @@ table, th, td {
 }
 
 #elo-table td {
-  font-size: 18px;
+  font-size: 0.9rem;
   background: none;
   padding: 0;
   border: none;
 }
 
 #elo-table .flag {
-  height: 28px;
+  height: 1.6rem;
   width: auto;
   margin-right: 0.5em;
   vertical-align: middle;
@@ -253,7 +259,7 @@ table, th, td {
 
 .elo-change-col {
     font-weight: 600;
-    flex: 0 0 10%;
+    flex: 0 0 15%;
     text-align: left;
 }
 
@@ -267,7 +273,7 @@ table, th, td {
     font-weight: 600;
     text-align: left;
     vertical-align: center;
-    flex: 0 0 55%;
+    flex: 0 0 50%;
 }
 
 .club-name {
@@ -283,14 +289,14 @@ table, th, td {
 
 .rank-change-col .icon {
     width: auto;
-    height: 12px;
+    height: 0.5rem;
     vertical-align: middle;
     margin-right: 4px;
 }
 
 .elo-change-col .icon {
     width: auto;
-    height: 12px;
+    height: 0.5rem;
     vertical-align: middle;
     margin-right: 4px;
 }
@@ -313,8 +319,8 @@ table, th, td {
 }
 
 .league-card {
-  flex: 1 1 300px;
-  max-width: 400px;
+  flex: 1 1 20rem;
+  max-width: 20rem;
   justify-content: space-between;
   padding: 0.5em 1em;
   margin-bottom: 1rem;
@@ -325,21 +331,21 @@ table, th, td {
 }
 
 .league-card .ucl {
-  font-size: 24px;
+  font-size: 1.2rem;
   color: #00004B;
   font-weight: bold;
   text-align: center;
 }
 
 .league-card .uel {
-  font-size: 24px;
+  font-size: 1.2rem;
   color: #FD6C01;
   font-weight: bold;
   text-align: center;
 }
 
 .league-card p {
-  font-size: 18px;
+  font-size: 0.9rem;
 }
 
 .info-container {
@@ -350,8 +356,8 @@ table, th, td {
 }
 
 .info-card {
-  flex: 1 1 300px;
-  max-width: 300px;
+  flex: 1 1 20rem;
+  max-width: 20rem;
   justify-content: space-between;
   padding: 0.75em 1em;
   margin-bottom: 1rem;
@@ -362,18 +368,18 @@ table, th, td {
 }
 
 .info-card .info-title {
-  font-size: 24px;
+  font-size: 1.2rem;
   color: #000000;
   font-weight: bold;
   text-align: center;
 }
 
 .info-card p {
-  font-size: 18px;
+  font-size: 0.9rem;
 }
 
 .flag {
-  height: 24px;
+  height: 1.6rem;
   width: auto;
   margin-right: 0.5em;
   vertical-align: middle;
@@ -394,13 +400,13 @@ table, th, td {
 
 .info-card .icon {
     width: auto;
-    height: 12px;
+    height: 0.5rem;
     vertical-align: middle;
     margin-right: 4px;
 }
 
 .info-card .info-change {
-  font-size: 20px;
+  font-size: 1rem;
   color: #000000;
   font-weight: 600;
   text-align: center;
@@ -416,11 +422,17 @@ table, th, td {
   color: #666;
 }
 
+@media (max-width: 920px) {
+  .elo-header {
+    width: 90%;
+  }
+}
+
 .elo-header span {
   flex: 0 0 auto;
 }
 .elo-header .rank-col {
-  flex-basis: 5%;
+  flex-basis: 0%;
   text-align: left;
 }
 .elo-header .rank-change-col {
