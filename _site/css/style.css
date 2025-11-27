@@ -353,6 +353,13 @@ table, th, td {
   text-align: center;
 }
 
+.league-card .uecl {
+  font-size: 1.2rem;
+  color: #01B61F;
+  font-weight: bold;
+  text-align: center;
+}
+
 .league-card p {
   font-size: 0.9rem;
 }
