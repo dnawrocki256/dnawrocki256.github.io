@@ -31,7 +31,7 @@
   <h1>Euro Elo Rankings</h1>
 
 <div class="intro">
-  <h2>29 May 2021 — status after 2020-21 season final</h2>
+  <h2>1 June 2024 — status after 2023-24 season final</h2>
   <div class="text-block">
 </div>
 
@@ -40,15 +40,15 @@
     <h3 class="ucl">UEFA Champions League</h3>
     <p class="club-name">
       <span class="precln">Champions</span>
-      <img src="flags/ENG.svg" class="flag">
-      Chelsea FC
-      <span class="country-abbr">ENG</span>
+      <img src="flags/ESP.svg" class="flag">
+      Real Madrid CF
+      <span class="country-abbr">ESP</span>
     </p>
     <p class="club-name">
       <span class="precln">Runners-up</span>
-      <img src="flags/ENG.svg" class="flag">
-      Manchester City FC
-      <span class="country-abbr">ENG</span>
+      <img src="flags/GER.svg" class="flag">
+      Borussia Dortmund
+      <span class="country-abbr">GER</span>
     </p>
   </div>
 
@@ -56,16 +56,33 @@
     <h3 class="uel">UEFA Europa League</h3>
     <p class="club-name">
       <span class="precln">Champions</span>
-      <img src="flags/ESP.svg" class="flag">
-      Villarreal CF
-      <span class="country-abbr">ESP</span>
+      <img src="flags/ITA.svg" class="flag">
+      Atalanta BC
+      <span class="country-abbr">ITA</span>
     </p>
     <p class="club-name">
       <span class="precln">Runners-up</span>
-      <img src="flags/ENG.svg" class="flag">
-      Manchester United FC
-      <span class="country-abbr">ENG</span>
+      <img src="flags/GER.svg" class="flag">
+      Bayer 04 Leverkusen
+      <span class="country-abbr">GER</span>
     </p>
+  </div>
+
+  <div class="league-card">
+      <h3 class="uecl">UEFA Conference League</h3>
+      <p class="club-name">
+        <span class="precln">Champions</span>
+        <img src="flags/GRE.svg" class="flag">
+        Olympiacos FC
+        <span class="country-abbr">GRE</span>
+      </p>
+      <p class="club-name">
+        <span class="precln">Runners-up</span>
+        <img src="flags/ITA.svg" class="flag">
+        ACF Fiorentina
+        <span class="country-abbr">ITA</span>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -73,41 +90,41 @@
   <div class="info-card">
     <h3 class="info-title">Most points gained</h3>
     <p class="club-name">
-      <img src="flags/ESP.svg" class="flag">
-      Villarreal CF
-      <span class="country-abbr">ESP</span>
+      <img src="flags/ITA.svg" class="flag">
+      Atalanta BC
+      <span class="country-abbr">ITA</span>
     </p>
-    <span class="info-change"><img src="icons/increase.svg" class="icon">100.89</span>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">102.35</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Biggest ranking climb</h3>
     <p class="club-name">
-      <img src="flags/BUL.svg" class="flag">
-      PFC CSKA Sofia
-      <span class="country-abbr">BUL</span>
+      <img src="flags/GRE.svg" class="flag">
+      Olympiacos FC
+      <span class="country-abbr">GRE</span>
     </p>
-    <span class="info-change"><img src="icons/increase.svg" class="icon">72</span>
+    <span class="info-change"><img src="icons/increase.svg" class="icon">59</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Most points lost</h3>
     <p class="club-name">
-      <img src="flags/BEL.svg" class="flag">
-      KAA Gent
-      <span class="country-abbr">BEL</span>
+      <img src="flags/ESP.svg" class="flag">
+      Sevilla FC
+      <span class="country-abbr">ESP</span>
     </p>
-    <span class="info-change"><img src="icons/decrease.svg" class="icon">106.08</span>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">104.92</span>
   </div>
 
   <div class="info-card">
     <h3 class="info-title">Biggest ranking drop</h3>
     <p class="club-name">
-      <img src="flags/BUL.svg" class="flag">
-      PFC Ludogorets Razgrad
-      <span class="country-abbr">BUL</span>
+      <img src="flags/SRB.svg" class="flag">
+      FK Čukarički
+      <span class="country-abbr">SRB</span>
     </p>
-    <span class="info-change"><img src="icons/decrease.svg" class="icon">80</span>
+    <span class="info-change"><img src="icons/decrease.svg" class="icon">57</span>
   </div>
 </div>
 
@@ -176,9 +193,9 @@
 
 <script>
 let fullData = [];
-let CURRENT_YEAR = 2021;
+let CURRENT_YEAR = 2024;
 
-fetch('rankings/2021ranking.json')
+fetch('rankings/2024ranking.json')
   .then(res => res.json())
   .then(data => {
     fullData = data;
@@ -233,14 +250,14 @@ function renderTable(data) {
       }
 
       row.innerHTML = `
-        <td class="rank-col">${club['2021_rank']}</td>
+        <td class="rank-col">${club['2024_rank']}</td>
         <td class="rank-change-col">${rankChangeHTML}</td>
         <td class="club-col">
         <img src="flags/${club.country}.svg" class="flag">
         <span class="club-name">${club['club_full']}</span>
         <span class="club-country">${club.country}</span>
         </td>
-        <td class="elo-col">${club['2021_elo'].toFixed(2)}</td>
+        <td class="elo-col">${club['2024_elo'].toFixed(2)}</td>
         <td class="elo-change-col">${eloChangeHTML}</td>
         <td class="year-col" style="color:${lastYearColor}">${club['last_year']}</td>
       `;

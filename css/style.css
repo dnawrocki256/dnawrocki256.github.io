@@ -123,7 +123,7 @@ nav a i {
   justify-content: center;
   text-align: center;
   font-size: 1rem;
-  margin-inline: 12.5%;
+  margin-inline: 20%;
 }
 
 .inline-image {
@@ -134,7 +134,7 @@ nav a i {
 }
 
 .inline-image img {
-  max-width: 75%;
+  max-width: 60%;
   height: auto;
   border: 1px solid #000000;
 }
@@ -438,12 +438,6 @@ table, th, td {
   color: #666;
 }
 
-@media (max-width: 920px) {
-  .elo-header {
-    width: 90%;
-  }
-}
-
 .elo-header span {
   flex: 0 0 auto;
 }
@@ -470,4 +464,16 @@ table, th, td {
 .elo-header .year-col {
   flex-basis: 5%;
   text-align: left;
+}
+
+@media (max-width: 920px) {
+  .elo-header {
+    width: 90%;
+  }
+  .text-block {
+    margin-inline: 10%;
+  }
+  .inline-image img {
+    max-width: 90%;
+  }
 }
