@@ -128,13 +128,14 @@ nav a i {
 
 .inline-image {
   justify-content: center;
+  text-align: center;
   display: flex;
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
 .inline-image img {
-  max-width: 60%;
+  max-width: 70%;
   height: auto;
   border: 1px solid #000000;
 }
