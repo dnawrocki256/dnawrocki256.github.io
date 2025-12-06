@@ -3,13 +3,22 @@ layout: default
 title: Home
 ---
 
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
 <div class="project-card" style="margin-top: 2rem;">
     <a href="dhondt-archive.html">
       <img src="images/elec_reform_cover.png" alt="alt_name">
     </a>
   <div class="project-card-title">Map archive</div>
   <div class="project-card-desc">Click here to view maps of UK general election polling
-    refactured using multi-member constituencies under D'Hondt apportionment, updating monthly.
+    refactored using multi-member constituencies under D'Hondt apportionment, updating monthly.
   </div>
 </div>
 
@@ -149,7 +158,7 @@ title: Home
 <div class="body">
     <h2 id="part3">Methodology</h2>
     <div class="text-block">
-        1. Drawing electoral boundaries
+        <b>1. Drawing electoral boundaries</b>
         <br>
         Electoral boundaries should try to follow existing cultural/administrative boundaries that British people are familiar with (their county, for example) as best as possible.
         For the sake of it being the only available voting data, I combined existing FPTP constituencies to form the new ones.
@@ -159,7 +168,7 @@ title: Home
         others. 
         <br>
         <br>
-        2. Constituency size
+        <b>2. Constituency size</b>
         <br>
         One of my first observations upon working on this project is that the more seats a constituency has, the more closely allocated seats proportionally match popular vote
         (an explanation as to why is under the <i>Critical analysis of results</i> section), so larger constituencies are favourable for proportionality reasons.
@@ -198,16 +207,140 @@ title: Home
                 and West Yorkshire West (11 seats) covering Bradford, Calderdale, and Kirklees
             </li>
         </ul>
+        <b>3. Allocation of seats</b>
+        <br>
+        The D'Hondt method of apportionment, also known as the Jefferson method or the greatest divisors method, works by assigning a quotient to each party before
+        each round of allocation, with the number of allocation rounds equal to the number of seats open.
+        The quotient is given by:
+        
+        <p>V = number of votes received, and s = number of seats currently allocated (initially 0)</p>
+        <p>\[
+        quotient = \frac{V}{s + 1}
+        \]</p>
+        
+        The quotients are initialised as the total vote tally.
+        <br>In the first round, the first-ranked party gets allocated a seat and their quotient becomes half their vote count
+        <br>In the second round, the party with the highest quotient gets allocated a seat. If this is the first-ranked party, their quotient becomes a third of their vote count.
+        If it is the second-ranked party, their quotient becomes half of their vote count.
+        <br>Repeat the process until all seats have been filled.
+        <br>
+        <br>
+        This loop in Python looks like:
+
+        <pre style="text-align:left;"><code class="language-python">
+        while total_seats < number_of_seats:
+            max_party = max(sorted_votes, key=sorted_votes.get)
+            seats[max_party] += 1
+            total_seats += 1
+            sorted_votes[max_party] = votes[max_party] / (seats[max_party] + 1)
+        </code></pre>
+
+        Below is an example for Warwickshire, a 6-seat constituency:
+    </div>
+    <table>
+    <tr>
+        <th style="width:7%">Allocation round</th>
+        <th style="width:4.5%">1</th>
+        <th style="width:4.5%">2</th>
+        <th style="width:4.5%">3</th>
+        <th style="width:4.5%">4</th>
+        <th style="width:4.5%">5</th>
+        <th style="width:4.5%">6</th>
+        <th style="width:3.5%">Seats</th>
+        <th style="width:3.5%">% vote</th>
+        <th style="width:3.5%">% seats</th>
+    </tr>
+    <tr>
+        <td>Labour Party</td>
+        <td style="background-color: #d49cb5;"><b>90 025</b></td>
+        <td>45 012</td>
+        <td>45 012</td>
+        <td style="background-color: #d49cb5;"><b>45 012</b></td>
+        <td>30 008</td>
+        <td>30 008</td>
+        <td>2</td>
+        <td>31.4%</td>
+        <td>33.3%</td>
+    </tr>
+    <tr>
+        <td>Conservative Party</td>
+        <td>86 657</td>
+        <td style="background-color: #d49cb5;"><b>86 657</b></td>
+        <td>43 329</td>
+        <td>43 329</td>
+        <td>43 329</td>
+        <td style="background-color: #d49cb5;"><b>43 329</b></td>
+        <td>2</td>
+        <td>30.2%</td>
+        <td>33.3%</td>
+    </tr>
+    <tr>
+        <td>Reform UK</td>
+        <td>47 812</td>
+        <td>47 812</td>
+        <td style="background-color: #d49cb5;"><b>47 812</b></td>
+        <td>23 906</td>
+        <td>23 906</td>
+        <td>23 906</td>
+        <td>1</td>
+        <td>16.7%</td>
+        <td>16.7%</td>
+    </tr>
+    <tr>
+        <td>Liberal Democrats</td>
+        <td>43 615</td>
+        <td>43 615</td>
+        <td>43 615</td>
+        <td>43 615</td>
+        <td style="background-color: #d49cb5;"><b>43 615</b></td>
+        <td>21 808</td>
+        <td>1</td>
+        <td>15.2%</td>
+        <td>16.7%</td>
+    </tr>
+    <tr>
+        <td>Green Party</td>
+        <td>15 998</td>
+        <td>15 998</td>
+        <td>15 998</td>
+        <td>15 998</td>
+        <td>15 998</td>
+        <td>15 998</td>
+        <td>0</td>
+        <td>5.6%</td>
+        <td>0.0%</td>
+    </tr>
+    </table> 
     </div>
 </div>
 
 <div class="body">
     <h2 id="part4">Critical analysis of results</h2>
     <div class="text-block">
-        For example, in a small 5 seat constituency each seat represents 20% of the total.
-        There is a significant lack of granularity here so misrepresentation will be large as we are rounding up or down to the nearest 20%.
-        In contrast, in a 16-seat constituency, each seat is worth only 6.25% of the total.
-        Furthermore, because larger parties are slightly overrepresented 
+        The primary observation from these results is that the big parties are still slightly overrepresented, albeit nowhere near as much as under FPTP.
+        Because the the first-ranked party receives a seat in the first round of apportionment, this gives that party an advantage in seat allocation.
+        This is visible not only in Labour being overrepresented in Parliament by 7.5%, but also in Scotland where SNP is either the first or second-ranked party by popular vote,
+        giving them a slight overrepresentation (3.1% of seats to 2.5% of votes).
+        This is most prominent in constituencies with fewer seats, as there is a lack of granularity.
+        For example, in a small 5-seat constituency each seat represents 20% of the total, meaning rounding up or down to the nearest 20% produces some misrepresentation error,
+        and a smaller party likely needs about 20% of the vote to qualify for one seat 
+        (this is a very rough estimate as it depends on the distribution of votes for the other parties)
+        In contrast, in a 16-seat constituency, each seat is worth only 6.25% of the total, meaning a party that gets around 5-10% of the vote will get one seat
+        (which wouldn't happen in the 5-seat constituency).
+        However, this slight misrepresentation is the trade-off for retaining local representation and not just running one big nationwide election, and I believe my system
+        strikes a good balance between maintining proportionality and keeping a local MP.
+        <br>
+        <br>
+        A second observation I noticed is that the degree to which the first-ranked party leads by coupled with how fragmented the remaining parties are, also plays a factor.
+        Receiving more than double or triple the number of votes than the next best party produces overrepresentation due to how seat allocation works.
+        This is prominent in a seat like West Glamorgan where Labour received 44% of the vote but got 3/4 seats, or 75%.
+        This is because the rest of the votes were fragmented amongst the other parties: second-placed Reform got 20% and third-placed Conservatives got 12%.
+        In contrast, in Falkirk & West Lothian (another 4-seat constituency), Labour also received 44% of the vote but only got 2 seats, or 50%, as the remaining votes were
+        mostly concentrated for SNP.
+        There's a definite shadow of tactical voting and the spoiler effect lingering here, but I'd argue that their effect is still nowhere near as strong as it is under FPTP.
+        This is the main reason why I decided on a minimum cut-off for the constituency size at 4 seats, as any smaller and tactical voting becomes more prominent, yet there are
+        some regions where a small constituency is required as it can't neatly be combined with others.
+        Of course, the solution to eliminating this is raise the minimum cut-off, but this will once again affect the balance between proportionality and local representation.
     </div>
 </div>
 
@@ -303,6 +436,16 @@ title: Home
 <div class="body">
     <h2 id="part6">Conclusion: what this could mean for British voting practices</h2>
     <div class="text-block">
-        Lorem ipsum
+        Since there is no longer one, oftentimes predictable, winner in each constituency, I believe this system allows for a wider range of political positions to run and have a reasonable
+        chance of winning a seat, particularly in larger constituencies.
+        As no party ever wins a majority of the popular vote, every election will be a hung election meaning ruling coalitions would have to form like they consistently
+        do in many European countries.
+        It means that no party every sweeps an election, and representation becomes more aligned with how the British electorate actually votes.
+        <br>
+        <br>
+        Beyond this, supporters of platforms that have no realistic chance of winning in their current constituency would be less disillusioned or forced to vote tactically to game the system.
+        Smaller parties, be they established or new, can now gather consistent support and put up a fight for seats, giving a more diverse range of representation that also works on the local
+        and regional level.
+        <br>Britain deserves an electoral system that is in line with reality and represents its diverse needs and opinions.
     </div>
 </div>
