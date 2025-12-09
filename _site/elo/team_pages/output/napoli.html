@@ -56,9 +56,7 @@
   </div>
 
   <script>
-    // Get the hyphenated team name from the URL
     let teamSlug = window.location.pathname.split("/").pop().replace(".html", "");
-    // Convert hyphens back to spaces to match the JSON filenames
     let teamJsonName = teamSlug.replace(/-/g, " ");
 
     fetch(`/elo/team_json/${teamJsonName}.json`)
@@ -66,8 +64,8 @@
       .then(data => {
         const teamName = data[0].club_full;
         const countryCode = data[0].country;
-        const header = document.getElementById("teamHeader");
-        header.innerHTML = `<img src="/elo/flags/${countryCode}.svg" class="flag" style="width:auto; height:1.6rem; margin-right:0.4em;"> ${teamName}`;
+        document.getElementById("teamHeader").innerHTML =
+          `<img src="/elo/flags/${countryCode}.svg" class="flag" style="width:auto; height:1.6rem; margin-right:0.4em;"> ${teamName}`;
         document.getElementById("teamName").textContent = teamName + " Elo & Ranking";
 
         const minYear = Math.min(...data.map(d => d.year));
@@ -77,6 +75,7 @@
         const ranks = [];
         const totalTeams = [];
         const elos = [];
+        const seriesBreaks = [];
 
         for (let y = minYear; y <= maxYear; y++) {
           const entry = data.find(d => Number(d.year) === y);
@@ -85,10 +84,12 @@
             ranks.push(entry[`${y}_rank`]);
             totalTeams.push(entry.total_teams);
             elos.push(entry[`${y}_elo`]);
+            seriesBreaks.push(!!entry.series_break);
           } else {
             ranks.push(null);
             totalTeams.push(null);
             elos.push(null);
+            seriesBreaks.push(false);
           }
         }
 
@@ -97,95 +98,102 @@
           return 1 - (rank - 1) / (totalTeams[i] - 1);
         });
 
-        // Find min and max in your data (ignoring nulls)
+        // Insert null in the **previous year** if current year is a series_break
+        const displayRanks = [...ranks];
+        const displayRelPos = [...relativePosition];
+        const displayElos = [...elos];
+
+        for (let i = 1; i < ranks.length; i++) {
+          if (seriesBreaks[i]) {
+            displayRanks[i - 1] = null;
+            displayRelPos[i - 1] = null;
+            displayElos[i - 1] = null;
+          }
+        }
+
+        // Minimum Elo vertical span
         const actualMin = Math.min(...elos.filter(v => v != null));
         const actualMax = Math.max(...elos.filter(v => v != null));
-
-        const minSpan = 20; // minimum vertical span you want
+        const minSpan = 20;
         let yMin = actualMin;
         let yMax = actualMax;
-
         if ((yMax - yMin) < minSpan) {
           const extra = (minSpan - (yMax - yMin)) / 2;
           yMin -= extra;
           yMax += extra;
         }
 
-        // Relative Position chart
         new Chart(document.getElementById("positionChart"), {
           type: "line",
           data: {
             labels: years,
-            datasets: [{ label: "Relative Position", data: relativePosition, borderColor: "blue", fill: false, tension: 0.1 }]
+            datasets: [{ label: "Relative Position", data: displayRelPos, borderColor: "blue", fill: false, tension: 0.1 }]
           },
           options: {
             spanGaps: false,
-            plugins: { 
-              tooltip: { 
-                callbacks: { 
+            plugins: {
+              tooltip: {
+                callbacks: {
                   label: ctx => {
                     const idx = ctx.dataIndex;
-                    const rank = ranks[idx];
-                    const score = elos[idx];
+                    const rank = displayRanks[idx];
                     const total = totalTeams[idx];
-                    return score == null ? "Not ranked" : `Rank: ${rank} / ${total}, Elo: ${score}`;
-                  } 
-                } 
-              } 
+                    return rank == null ? "Not ranked" : `Rank: ${rank} / ${total}`;
+                  }
+                }
+              }
             },
-            scales: { y: { min: 0, max: 1, reverse: false, title: { display: true, text: "Position (1 = top)" } } }
+            scales: { y: { reverse: false, title: { display: true, text: "Position (1 = top)" } } }
           }
         });
 
-        // Position chart
         new Chart(document.getElementById("absPositionChart"), {
           type: "line",
           data: {
             labels: years,
-            datasets: [{ label: "Position", data: ranks, borderColor: "blue", fill: false, tension: 0.1 }]
+            datasets: [{ label: "Position", data: displayRanks, borderColor: "blue", fill: false, tension: 0.1 }]
           },
           options: {
             spanGaps: false,
-            plugins: { 
-              tooltip: { 
-                callbacks: { 
+            plugins: {
+              tooltip: {
+                callbacks: {
                   label: ctx => {
                     const idx = ctx.dataIndex;
-                    const score = elos[idx];
-                    const rank = ranks[idx];
-                    return rank == null ? "Not ranked" : `Rank: ${rank}, Elo: ${score}`;
-                  } 
-                } 
-              } 
+                    const rank = displayRanks[idx];
+                    return rank == null ? "Not ranked" : `Rank: ${rank}`;
+                  }
+                }
+              }
             },
-            scales: { y: { type: 'linear', reverse: true, suggestedMax: 10, ticks: { stepSize:1 }, title: { display: true, text: "Position" } } }
+            scales: { y: { type: 'linear', reverse: true, ticks: { stepSize: 1 }, title: { display: true, text: "Position" } } }
           }
         });
 
-        // Elo chart
         new Chart(document.getElementById("eloChart"), {
           type: "line",
           data: {
             labels: years,
-            datasets: [{ label: "Elo Score", data: elos, borderColor: "red", fill: false, tension: 0.1 }]
+            datasets: [{ label: "Elo Score", data: displayElos, borderColor: "red", fill: false, tension: 0.1 }]
           },
           options: {
             spanGaps: false,
-            plugins: { 
-              tooltip: { 
-                callbacks: { 
+            plugins: {
+              tooltip: {
+                callbacks: {
                   label: ctx => {
                     const idx = ctx.dataIndex;
-                    const score = elos[idx];
-                    const rank = ranks[idx];
+                    const score = displayElos[idx];
+                    const rank = displayRanks[idx];
                     return score == null ? "Not ranked" : `Elo: ${score}, Rank: ${rank}`;
-                  } 
-                } 
-              } 
+                  }
+                }
+              }
             },
-            scales: { y: { type: 'linear', reverse: false, suggestedMin: yMin, suggestedMax: yMax, title: { display: true, text: "Position" } } }
+            scales: { y: { type: 'linear', reverse: false, suggestedMin: yMin, suggestedMax: yMax, title: { display: true, text: "Elo Score" } } }
           }
         });
+
       });
   </script>
 </body>
