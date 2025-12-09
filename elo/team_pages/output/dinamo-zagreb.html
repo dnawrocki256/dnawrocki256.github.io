@@ -1,0 +1,168 @@
+---
+layout: default
+title: Home
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title id="teamName">Team Page</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1 id="teamHeader"></h1>
+
+  <div class="text-block">
+    Year on year summary graphs for the team (points on the graphs indicate end of season, not end of year)
+  </div>
+
+  <h2>Relative Position</h2>
+  <div style="width:50%; margin: 0 auto;">
+    <canvas id="positionChart"></canvas>
+  </div>
+
+  <h2>Position</h2>
+  <div style="width:50%; margin: 0 auto;">
+    <canvas id="absPositionChart"></canvas>
+  </div>
+
+  <h2>Elo Score</h2>
+  <div style="width:50%; margin: 0 auto;">
+    <canvas id="eloChart"></canvas>
+  </div>
+
+  <script>
+    // Get the hyphenated team name from the URL
+    let teamSlug = window.location.pathname.split("/").pop().replace(".html", "");
+    // Convert hyphens back to spaces to match the JSON filenames
+    let teamJsonName = teamSlug.replace(/-/g, " ");
+
+    fetch(`/elo/team_json/${teamJsonName}.json`)
+      .then(r => r.json())
+      .then(data => {
+        const teamName = data[0].club_full;
+        const countryCode = data[0].country;
+        const header = document.getElementById("teamHeader");
+        header.innerHTML = `<img src="/elo/flags/${countryCode}.svg" class="flag" style="width:auto; height:1.6rem; margin-right:0.4em;"> ${teamName}`;
+        document.getElementById("teamName").textContent = teamName + " Elo & Ranking";
+
+        const minYear = Math.min(...data.map(d => d.year));
+        const maxYear = Math.max(...data.map(d => d.year));
+
+        const years = [];
+        const ranks = [];
+        const totalTeams = [];
+        const elos = [];
+
+        for (let y = minYear; y <= maxYear; y++) {
+          const entry = data.find(d => Number(d.year) === y);
+          years.push(y);
+          if (entry && entry[`${y}_rank`] != null) {
+            ranks.push(entry[`${y}_rank`]);
+            totalTeams.push(entry.total_teams);
+            elos.push(entry[`${y}_elo`]);
+          } else {
+            ranks.push(null);
+            totalTeams.push(null);
+            elos.push(null);
+          }
+        }
+
+        const relativePosition = ranks.map((rank, i) => {
+          if (rank == null || totalTeams[i] == null) return null;
+          return 1 - (rank - 1) / (totalTeams[i] - 1);
+        });
+
+        // Find min and max in your data (ignoring nulls)
+        const actualMin = Math.min(...elos.filter(v => v != null));
+        const actualMax = Math.max(...elos.filter(v => v != null));
+
+        const minSpan = 20; // minimum vertical span you want
+        let yMin = actualMin;
+        let yMax = actualMax;
+
+        if ((yMax - yMin) < minSpan) {
+          const extra = (minSpan - (yMax - yMin)) / 2;
+          yMin -= extra;
+          yMax += extra;
+        }
+
+        // Relative Position chart
+        new Chart(document.getElementById("positionChart"), {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [{ label: "Relative Position", data: relativePosition, borderColor: "blue", fill: false, tension: 0.1 }]
+          },
+          options: {
+            spanGaps: false,
+            plugins: { 
+              tooltip: { 
+                callbacks: { 
+                  label: ctx => {
+                    const idx = ctx.dataIndex;
+                    const rank = ranks[idx];
+                    const score = elos[idx];
+                    const total = totalTeams[idx];
+                    return score == null ? "Not ranked" : `Rank: ${rank} / ${total}, Elo: ${score}`;
+                  } 
+                } 
+              } 
+            },
+            scales: { y: { min: 0, max: 1, reverse: false, title: { display: true, text: "Position (1 = top)" } } }
+          }
+        });
+
+        // Position chart
+        new Chart(document.getElementById("absPositionChart"), {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [{ label: "Position", data: ranks, borderColor: "blue", fill: false, tension: 0.1 }]
+          },
+          options: {
+            spanGaps: false,
+            plugins: { 
+              tooltip: { 
+                callbacks: { 
+                  label: ctx => {
+                    const idx = ctx.dataIndex;
+                    const score = elos[idx];
+                    const rank = ranks[idx];
+                    return rank == null ? "Not ranked" : `Rank: ${rank}, Elo: ${score}`;
+                  } 
+                } 
+              } 
+            },
+            scales: { y: { type: 'linear', reverse: true, suggestedMin: 1, suggestedMax: 10, ticks: { stepSize:1 }, title: { display: true, text: "Position" } } }
+          }
+        });
+
+        // Elo chart
+        new Chart(document.getElementById("eloChart"), {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [{ label: "Elo Score", data: elos, borderColor: "red", fill: false, tension: 0.1 }]
+          },
+          options: {
+            spanGaps: false,
+            plugins: { 
+              tooltip: { 
+                callbacks: { 
+                  label: ctx => {
+                    const idx = ctx.dataIndex;
+                    const score = elos[idx];
+                    const rank = ranks[idx];
+                    return score == null ? "Not ranked" : `Elo: ${score}, Rank: ${rank}`;
+                  } 
+                } 
+              } 
+            },
+            scales: { y: { type: 'linear', reverse: false, suggestedMin: yMin, suggestedMax: yMax, title: { display: true, text: "Position" } } }
+          }
+        });
+      });
+  </script>
+</body>
+</html>
