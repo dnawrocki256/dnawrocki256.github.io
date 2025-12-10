@@ -112,14 +112,15 @@ title: Home
                 callbacks: {
                   label: ctx => {
                     const idx = ctx.dataIndex;
+                    const score = displayElos[idx];
                     const rank = displayRanks[idx];
                     const total = totalTeams[idx];
-                    return rank == null ? "Not ranked" : `Rank: ${rank} / ${total}`;
+                    return rank == null ? "Not ranked" : `Rank: ${rank} / ${total}, Elo: ${score}`;
                   }
                 }
               }
             },
-            scales: { y: { reverse: false, title: { display: true, text: "Position (1 = top)" } } }
+            scales: { y: { min: 0, max: 1, reverse: false, title: { display: true, text: "Position (1 = top)" } } }
           }
         });
 
@@ -136,8 +137,9 @@ title: Home
                 callbacks: {
                   label: ctx => {
                     const idx = ctx.dataIndex;
+                    const score = displayElos[idx];
                     const rank = displayRanks[idx];
-                    return rank == null ? "Not ranked" : `Rank: ${rank}`;
+                    return rank == null ? "Not ranked" : `Rank: ${rank}, Elo: ${score}`;
                   }
                 }
               }
