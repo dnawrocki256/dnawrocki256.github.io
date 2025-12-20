@@ -26,10 +26,20 @@ h1 {
   text-align: center;
   font-size: 1.8rem;
 }
+@media (max-width: 920px) {
+    h1 {
+    font-size: 1.4rem;
+  }
+}
 
 h2 {
   text-align: center;
   font-size: 1.2rem;
+}
+@media (max-width: 920px) {
+    h2 {
+    font-size: 1rem;
+  }
 }
 
 
@@ -93,6 +103,11 @@ nav a i {
   margin-bottom: 2%;
   transition: background-color 0.3s ease;
 }
+@media (max-width: 920px) {
+    .project-card {
+    width: 80%;
+  }
+}
 
 .project-card img {
   width: 100%;
@@ -111,6 +126,11 @@ nav a i {
   font-weight: 600;
   margin-top: 1.5%;
 }
+@media (max-width: 920px) {
+    .project-card-title {
+    font-size: 1rem;
+  }
+}
 
 .project-card-desc {
   color: #000000;
@@ -118,12 +138,22 @@ nav a i {
   font-size: 0.9rem;
   margin-top: 1%;
 }
+@media (max-width: 920px) {
+    .project-card-desc {
+    font-size: 0.8rem;
+  }
+}
 
 .text-block {
   justify-content: center;
   text-align: center;
   font-size: 1rem;
   margin-inline: 20%;
+}
+@media (max-width: 920px) {
+  .text-block {
+    font-size: 0.8rem;
+  }
 }
 
 .inline-image {
@@ -182,6 +212,11 @@ table {
   margin-top: 1%;
   width: 80%;
 }
+@media (max-width: 920px) {
+    table {
+    width: 95%;
+  }
+}
 
 table, th, td {
   border: 1px solid black;
@@ -190,6 +225,11 @@ table, th, td {
   padding: 1%;
   font-size: 0.75rem;
   table-layout: fixed;
+}
+@media (max-width: 920px) {
+    table, th, td {
+    font-size: 0.6rem;
+  }
 }
 
 .center-list {
@@ -201,9 +241,15 @@ table, th, td {
 .contents {
   border: 1px solid #000000;
   padding: 0 0 1% 0;  
-  width: 500px;          
+  width: 30%;          
   margin: 0 auto;         
   text-align: center;
+}
+@media (max-width: 920px) {
+    .contents {
+    width: 70%;
+    font-size: 0.9rem;
+  }
 }
 
 #elo-table {
@@ -290,6 +336,11 @@ table, th, td {
     font-weight: 600;
     color: #000;
 }
+@media (max-width: 920px) {
+    .club-name {
+    font-size: 0.8rem;
+  }
+}
 
 .club-country {
     font-weight: 600;
@@ -327,6 +378,10 @@ table, th, td {
   justify-content: center;
   flex-wrap: wrap;
 }
+@media (max-width: 920px) {
+    .project-card-title {
+  }
+}
 
 .league-card {
   flex: 1 1 20rem;
@@ -341,21 +396,21 @@ table, th, td {
 }
 
 .league-card .ucl {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #00004B;
   font-weight: bold;
   text-align: center;
 }
 
 .league-card .uel {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #FD6C01;
   font-weight: bold;
   text-align: center;
 }
 
 .league-card .uecl {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #01B61F;
   font-weight: bold;
   text-align: center;
@@ -383,6 +438,11 @@ table, th, td {
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   text-align: center;
 }
+@media (max-width: 920px) {
+    .info-card {
+    max-width: 10rem;
+  }
+}
 
 .info-card .info-title {
   font-size: 1.2rem;
@@ -390,9 +450,19 @@ table, th, td {
   font-weight: bold;
   text-align: center;
 }
+@media (max-width: 920px) {
+    .info-card .info-title {
+    font-size: 1rem;
+  }
+}
 
 .info-card p {
   font-size: 0.9rem;
+}
+@media (max-width: 920px) {
+    .info-card p {
+    font-size: 0.8rem;
+  }
 }
 
 .flag {
@@ -400,6 +470,12 @@ table, th, td {
   width: auto;
   margin-right: 0.5em;
   vertical-align: middle;
+}
+@media (max-width: 920px) {
+    .flag {
+    font-size: 1rem;
+    height: 1.1rem
+  }
 }
 
 .country-abbr {
@@ -427,6 +503,11 @@ table, th, td {
   color: #000000;
   font-weight: 600;
   text-align: center;
+}
+@media (max-width: 920px) {
+    .info-card .info-change {
+    font-size: 0.9rem;
+  }
 }
 
 .elo-header {
@@ -497,7 +578,7 @@ table, th, td {
     margin-right: 0.1em;
   }
   #elo-table .flag {
-    height: 1.2rem;
+    height: 1rem;
     width: auto;
     margin-right: 0.4em;
   }
