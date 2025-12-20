@@ -215,7 +215,7 @@ table, th, td {
 
 @media (max-width: 920px) {
   #elo-table {
-    width: 90%;
+    width: 95%;
   }
 }
 
@@ -436,6 +436,7 @@ table, th, td {
   align-items: flex-end;
   margin: 0 auto 0.5em auto;
   font-weight: 700;
+  font-size: 1rem;
   color: #666;
 }
 
@@ -467,9 +468,14 @@ table, th, td {
   text-align: left;
 }
 
+.elo-graph {
+  width: 50%;
+  margin: 0 auto;
+}
+
 @media (max-width: 920px) {
   .elo-header {
-    width: 90%;
+    width: 95%;
   }
   .text-block {
     margin-inline: 10%;
@@ -477,4 +483,47 @@ table, th, td {
   .inline-image img {
     max-width: 90%;
   }
+  #elo-table td {
+    font-size: 0.7rem;
+  }
+  .rank-change-col .icon {
+    width: auto;
+    height: 0.3rem;
+  }
+  .elo-change-col .icon {
+    width: auto;
+    height: 0.3rem;
+    vertical-align: middle;
+    margin-right: 0.1em;
+  }
+  #elo-table .flag {
+    height: 1.2rem;
+    width: auto;
+    margin-right: 0.4em;
+  }
+  .elo-header {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    align-items: flex-end;
+    margin: 0 auto 0.5em auto;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: #666;
+  }
+  .elo-graph {
+    width: 95%;
+    margin: 0 auto;
+  }
+  .filter-container {
+    font-size: 0.8rem;
+  }
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
 }
