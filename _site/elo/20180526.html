@@ -236,7 +236,9 @@ function renderTable(data) {
         <td class="rank-change-col">${rankChangeHTML}</td>
         <td class="club-col">
         <img src="flags/${club.country}.svg" class="flag">
-        <span class="club-name">${club['club_full']}</span>
+        <a href="team_pages/output/${club['club_abbr'].replace(/ /g, '-').toLowerCase()}.html" class="club-link">
+        ${club['club_full']}
+        </a>
         <span class="club-country">${club.country}</span>
         </td>
         <td class="elo-col">${club['2018_elo'].toFixed(2)}</td>
