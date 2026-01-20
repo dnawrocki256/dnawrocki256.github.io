@@ -341,6 +341,12 @@ table, th, td {
     font-size: 0.8rem;
   }
 }
+@media (max-width: 920px) {
+    .club-link {
+    font-size: 0.8rem;
+  }
+}
+
 
 .club-country {
     font-weight: 600;
@@ -607,4 +613,8 @@ table, th, td {
   justify-content: center;
   gap: 1rem;
   margin: 2rem auto;
+}
+
+.club-link {
+  font: inherit
 }
