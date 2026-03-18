@@ -8,8 +8,8 @@
   --text-main: #f1f5f9;    /* Off-white text */
   --text-muted: #868c99;
   --accent-main: #171C1F;
-  --accent-light: #2d1f1d; /* Darker version of your peach for hover states */
-  --accent-hover: #d13e21;
+  --accent-light: #6a173c; /* Darker version of your peach for hover states */
+  --accent-hover: #7A84FF;
   --nav-bg: #171C1F;       /* Almost black for the nav */
   --nav-text: #f9fafb;
   --border-color: #334155; /* Subtle dark border */
@@ -227,6 +227,7 @@ footer {
 .inline-image {
   display: flex;
   justify-content: center;
+  text-align: center;
   padding: 2rem 0;
 }
 
