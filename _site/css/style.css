@@ -237,6 +237,19 @@ footer {
   box-shadow: var(--shadow-sm);
 }
 
+.wider-inline-image {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.wider-inline-image img {
+  max-width: 80%;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
 .image-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
