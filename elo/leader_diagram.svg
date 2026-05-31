@@ -24,16 +24,17 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.5"
-     inkscape:cx="499"
-     inkscape:cy="857"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="152.38151"
+     inkscape:cy="472.52411"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
-     inkscape:window-x="-8"
+     inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3"
-     showguides="false" /><defs
+     inkscape:current-layer="layer2"
+     showguides="false"
+     showgrid="false" /><defs
      id="defs1"><rect
        x="90.674416"
        y="21.47323"
@@ -743,8 +744,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Text"
-     style="display:inline"
-     sodipodi:insensitive="true"><text
+     style="display:inline"><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.610317,145.4642)"
        id="text111"
@@ -753,7 +753,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan1">2021</tspan></text><text
+         id="tspan25">2021</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.536307,118.93177)"
        id="text112"
@@ -762,7 +762,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan2">2022</tspan></text><text
+         id="tspan26">2022</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.551117,92.488265)"
        id="text113"
@@ -771,7 +771,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan3">2023</tspan></text><text
+         id="tspan27">2023</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.542657,66.021465)"
        id="text114"
@@ -780,7 +780,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan4">2024</tspan></text><text
+         id="tspan28">2024</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.519377,39.539863)"
        id="text115"
@@ -789,7 +789,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan5">2025</tspan></text><text
+         id="tspan29">2025</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.519377,13.081523)"
        id="text116"
@@ -798,7 +798,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan6">2026</tspan></text><text
+         id="tspan30">2026</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.57349281,0,0,0.57349281,-25.512853,98.410892)"
        id="text125"
@@ -807,7 +807,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan7">FC Bayern München</tspan></text><text
+         id="tspan31">FC Bayern München</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.57349281,0,0,0.57349281,-25.512853,13.743693)"
        id="text118"
@@ -816,7 +816,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan8">FC Bayern München</tspan></text><image
+         id="tspan32">FC Bayern München</tspan></text><image
        width="6.5347114"
        height="4.3564749"
        preserveAspectRatio="none"
@@ -833,7 +833,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan9">FC Barcelona</tspan></text><image
+         id="tspan33">FC Barcelona</tspan></text><image
        width="6.5347114"
        height="4.3564744"
        preserveAspectRatio="none"
@@ -850,7 +850,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan10">2011</tspan></text><text
+         id="tspan34">2011</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.536177,383.51514)"
        id="text38"
@@ -859,7 +859,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan11">2012</tspan></text><text
+         id="tspan35">2012</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.550987,357.07163)"
        id="text39"
@@ -868,7 +868,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan12">2013</tspan></text><text
+         id="tspan36">2013</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.542527,330.60483)"
        id="text40"
@@ -877,7 +877,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan13">2014</tspan></text><text
+         id="tspan37">2014</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.519247,304.12321)"
        id="text41"
@@ -886,7 +886,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan14">2015</tspan></text><text
+         id="tspan38">2015</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.520467,277.66602)"
        id="text42"
@@ -895,7 +895,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan15">2016</tspan></text><text
+         id="tspan39">2016</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.57349281,0,0,0.57349281,-15.829988,233.14954)"
        id="text43"
@@ -904,7 +904,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan16">Real Madrid CF</tspan></text><image
+         id="tspan40">Real Madrid CF</tspan></text><image
        width="6.5347114"
        height="4.3564744"
        preserveAspectRatio="none"
@@ -921,7 +921,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan17">2017</tspan></text><text
+         id="tspan41">2017</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.540497,224.77359)"
        id="text96"
@@ -930,7 +930,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan18">2018</tspan></text><text
+         id="tspan42">2018</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.551077,198.32161)"
        id="text97"
@@ -939,7 +939,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan19">2019</tspan></text><text
+         id="tspan43">2019</tspan></text><text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.563787,171.87597)"
        id="text98"
@@ -948,7 +948,7 @@
        y="0"><tspan
          x="90.673828"
          y="36.80599"
-         id="tspan20">2020</tspan></text><path
+         id="tspan44">2020</tspan></text><path
        style="display:inline;fill:none;fill-opacity:1;stroke:#f5f5f5;stroke-width:0.396875;stroke-linecap:butt;stroke-dasharray:none;stroke-opacity:1"
        d="m 70.379227,127.26456 h 10.19079"
        id="path105" /><path
@@ -1005,7 +1005,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan21">Real Madrid CF</tspan></text><image
+         id="tspan45">Real Madrid CF</tspan></text><image
        width="6.5347114"
        height="4.3564744"
        preserveAspectRatio="none"
@@ -1030,7 +1030,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan22">Real Madrid CF</tspan></text><image
+         id="tspan46">Real Madrid CF</tspan></text><image
        width="6.5347114"
        height="4.3564744"
        preserveAspectRatio="none"
@@ -1047,7 +1047,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan23">FC Bayern München</tspan></text><image
+         id="tspan47">FC Bayern München</tspan></text><image
        width="6.5347114"
        height="4.3564749"
        preserveAspectRatio="none"
@@ -1064,7 +1064,7 @@
        y="0"><tspan
          x="90.673828"
          y="29.139323"
-         id="tspan24">Arsenal FC</tspan></text><image
+         id="tspan48">Arsenal FC</tspan></text><image
        width="6.5347114"
        height="4.3564749"
        preserveAspectRatio="none"
