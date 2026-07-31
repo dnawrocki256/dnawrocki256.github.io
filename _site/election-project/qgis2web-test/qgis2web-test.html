@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <style>
+        /* Base page split */
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8fafc;
+        }
+        
+        #map {
+            width: 100%;
+            height: 60vh;
+            border-bottom: 2px solid #cbd5e1;
+            z-index: 1;
+        }
+
+        /* Scrollable table container */
+        #dashboard-container {
+            width: 100%;
+            height: 40vh;
+            box-sizing: border-box;
+            padding: 0;
+            overflow-y: scroll;
+            background: #ffffff;
+        }
+
+        /* Clean data table styling */
+        .constituency-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .constituency-table th {
+            position: sticky;
+            top: 0;
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            padding: 12px 16px;
+            border-bottom: 2px solid #cbd5e1;
+            z-index: 10;
+        }
+
+        .constituency-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+
+        /* Hover effect */
+        .constituency-table tbody tr:hover {
+            background-color: #f8fafc;
+            cursor: pointer;
+        }
+
+        /* Highlight classes on selection */
+        .constituency-table tr.selected-row {
+            background-color: #fef08a !important; /* Yellow highlight */
+            font-weight: 600;
+            outline: 2px solid #eab308;
+        }
+
+        /* Match party abbreviations with subtle colors in the table */
+        .party-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        .badge-LAB { background-color: #e50038; }
+        .badge-CON { background-color: #00b0ef; }
+        .badge-REF { background-color: #5afffd; color: #000; }
+        .badge-LD  { background-color: #f2b119; }
+        .badge-GRN { background-color: #00ab5b; }
+        .badge-SNP { background-color: #fef687; color: #000; }
+        .badge-PC  { background-color: #1b5f54; }
+        .badge-OTH { background-color: #94a3b8; }
+        </style>
+        <title>Constituencies Interactive List</title>
+    </head>
+
+    <body>
+        
+        <div id="map"></div>
+        <div id="dashboard-container">
+            <table class="constituency-table">
+                <thead>
+                    <tr>
+                        <th>Constituency</th>
+                        <th>District</th>
+                        <th>2024 Winner</th>
+                        <th>Projected Winner</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Rows injected automatically by script -->
+                </tbody>
+            </table>
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="data/ukconstituenciesfinalukconstituencies2024_0.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1
+        }).fitBounds([[49.451974938356585,-10.59474530367091],[56.97926701256662,6.9982395587929265]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        
+        var bounds_group = new L.featureGroup([]);
+
+        // Quick function to sanitize element IDs (removes whitespace/special characters)
+        function getSafeId(name) {
+            return "row-" + name.replace(/[^a-zA-Z0-9]/g, "");
+        }
+
+        /* ===================================================
+           1. BUILD THE DATATABLE FROM GEOJSON ON LOAD
+           =================================================== */
+        var tbody = document.getElementById('table-body');
+        var features = json_ukconstituenciesfinalukconstituencies2024_0.features;
+
+        // Sort constituencies alphabetically
+        features.sort(function(a, b) {
+            var nameA = a.properties.Constituency || "";
+            var nameB = b.properties.Constituency || "";
+            return nameA.localeCompare(nameB);
+        });
+
+        features.forEach(function(feature) {
+            var props = feature.properties;
+            var safeId = getSafeId(props.Constituency);
+            var row = document.createElement('tr');
+            row.id = safeId;
+
+            // Simple markup building using class helpers for the colored winner badges
+            row.innerHTML = `
+                <td><strong>${props.Constituency || 'Unknown'}</strong></td>
+                <td>${props.District || 'N/A'}</td>
+                <td><span class="party-badge badge-${props['Winner at 2024']}">${props['Winner at 2024'] || ''}</span></td>
+                <td><span class="party-badge badge-${props['Projected winner']}">${props['Projected winner'] || ''}</span></td>
+            `;
+
+            // Optional: Click a row in the table to find it on the map!
+            row.addEventListener('click', function() {
+                // Find corresponding Leaflet layer and trigger map zoom/pan
+                layer_ukconstituenciesfinalukconstituencies2024_0.eachLayer(function(layer) {
+                    if (layer.feature.properties.Constituency === props.Constituency) {
+                        map.fitBounds(layer.getBounds());
+                        highlightRow(safeId);
+                    }
+                });
+            });
+
+            tbody.appendChild(row);
+        });
+
+        /* ===================================================
+           2. INTERCEPT MAP CLICK -> HIGHLIGHT & SCROLL TABLE
+           =================================================== */
+        function highlightRow(safeId) {
+            // Remove previous highlights
+            var previouslySelected = document.querySelectorAll('.selected-row');
+            previouslySelected.forEach(function(el) {
+                el.classList.remove('selected-row');
+            });
+
+            // Find target row
+            var targetRow = document.getElementById(safeId);
+            if (targetRow) {
+                targetRow.classList.add('selected-row');
+                
+                // Scroll row smoothly right to the center of our dashboard panel
+                targetRow.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+
+        function pop_ukconstituenciesfinalukconstituencies2024_0(feature, layer) {
+            layer.on('click', function(e) {
+                var safeId = getSafeId(feature.properties.Constituency);
+                highlightRow(safeId);
+            });
+        }
+
+        /* ===================================================
+           3. RENDER THE MAP LAYER
+           =================================================== */
+        function style_ukconstituenciesfinalukconstituencies2024_0_0(feature) {
+            switch(String(feature.properties['Projected winner'])) {
+                case 'LAB': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(229,0,56,1.0)', interactive: true };
+                case 'CON': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(0,176,239,1.0)', interactive: true };
+                case 'REF': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(90,255,253,1.0)', interactive: true };
+                case 'LD':  return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(242,177,25,1.0)', interactive: true };
+                case 'GRN': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(0,171,91,1.0)', interactive: true };
+                case 'SNP': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(254,246,135,1.0)', interactive: true };
+                case 'PC':  return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(27,95,84,1.0)', interactive: true };
+                case 'OTH': return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(208,208,208,1.0)', interactive: true };
+                default:    return { pane: 'pane_ukconstituenciesfinalukconstituencies2024_0', opacity: 1, color: 'rgba(80,80,80,1.0)', dashArray: '', lineCap: 'butt', lineJoin: 'miter', weight: 1.0, fill: true, fillOpacity: 1, fillColor: 'rgba(245,245,245,1.0)', interactive: true };
+            }
+        }
+
+        map.createPane('pane_ukconstituenciesfinalukconstituencies2024_0');
+        map.getPane('pane_ukconstituenciesfinalukconstituencies2024_0').style.zIndex = 400;
+        
+        var layer_ukconstituenciesfinalukconstituencies2024_0 = new L.geoJson(json_ukconstituenciesfinalukconstituencies2024_0, {
+            interactive: true,
+            dataVar: 'json_ukconstituenciesfinalukconstituencies2024_0',
+            layerName: 'layer_ukconstituenciesfinalukconstituencies2024_0',
+            pane: 'pane_ukconstituenciesfinalukconstituencies2024_0',
+            onEachFeature: pop_ukconstituenciesfinalukconstituencies2024_0,
+            style: style_ukconstituenciesfinalukconstituencies2024_0_0,
+        });
+
+        bounds_group.addLayer(layer_ukconstituenciesfinalukconstituencies2024_0);
+        map.addLayer(layer_ukconstituenciesfinalukconstituencies2024_0);
+        </script>
+        </script>        
+    </body>
+</html>
+
